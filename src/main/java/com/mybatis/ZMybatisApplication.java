@@ -1,5 +1,7 @@
 package com.mybatis;
 
+import com.mybatis.example.dao.UserDao;
+import com.mybatis.example.entity.User;
 import com.mybatis.io.Resource;
 import com.mybatis.load.xml.XmlConfigBuilder;
 import com.mybatis.session.Configuration;
@@ -8,6 +10,7 @@ import com.mybatis.session.SqlSessionFactory;
 import com.mybatis.session.SqlSessionFactoryBuild;
 
 import java.io.InputStream;
+import java.util.List;
 
 /**
  *
@@ -25,8 +28,11 @@ public class ZMybatisApplication {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuild().build(configuration);
         //通过SqlSessionFactory创建SqlSession
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        
-
+        //获取用户Mapper实例
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        //获取用户列表
+        List<User> userList = userDao.getUserList();
+        System.out.println(userList);
     }
 
 }

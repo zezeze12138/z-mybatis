@@ -6,12 +6,12 @@ package com.mybatis.session;
 public interface SqlSession {
 
     /**
-     * 查询一条
+     * 查询列表
      * @param statement
      * @param <T>
      * @return
      */
-    <T> T selectOne(String statement);
+    <T> T selectList(String statement);
 
     /**
      * 获取Mapper
