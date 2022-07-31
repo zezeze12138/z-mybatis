@@ -38,4 +38,11 @@ public class SqlCommand {
         return configuration.getMappedStatement(statementId);
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public SqlCommandType getType() {
+        return type;
+    }
 }

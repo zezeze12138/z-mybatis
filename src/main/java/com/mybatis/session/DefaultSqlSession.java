@@ -10,12 +10,20 @@ public class DefaultSqlSession implements SqlSession {
     private final Configuration configuration;
     private final Executor executor;
 
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
+    public Executor getExecutor() {
+        return executor;
+    }
+
     public DefaultSqlSession(Configuration configuration, Executor executor) {
         this.configuration = configuration;
         this.executor = executor;
     }
 
-    public <T> T selectList(String statement) {
+    public <T> T selectList(String statement, Object parameter) {
         return null;
     }
 
