@@ -1,6 +1,9 @@
 package com.mybatis.session;
 
 import com.mybatis.executor.Executor;
+import com.mybatis.mapping.MappedStatement;
+
+import java.util.List;
 
 /**
  * 默认的SqlSession接口实现类
@@ -23,8 +26,9 @@ public class DefaultSqlSession implements SqlSession {
         this.executor = executor;
     }
 
-    public <T> T selectList(String statement, Object parameter) {
-        return null;
+    public <E> List<E> selectList(String statement, Object parameter) {
+        MappedStatement ms = configuration.getMappedStatement(statement);
+        return executor.query(ms, parameter, null);
     }
 
     /**

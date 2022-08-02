@@ -1,5 +1,7 @@
 package com.mybatis.session;
 
+import java.util.List;
+
 /**
  *
  */
@@ -11,7 +13,7 @@ public interface SqlSession {
      * @param parameter 查询参数
      * @return
      */
-    <T> T selectList(String statement, Object parameter);
+    <E> List<E> selectList(String statement, Object parameter);
 
     /**
      * 获取Mapper
