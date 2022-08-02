@@ -1,6 +1,7 @@
 package com.mybatis.session;
 
 import com.mybatis.binding.MapperRegistry;
+import com.mybatis.executor.Executor;
 import com.mybatis.mapping.MappedStatement;
 
 import java.util.HashMap;
@@ -33,4 +34,14 @@ public class Configuration {
         return mappedStatements.get(id);
     }
 
+    /**
+     * 创建执行器
+     * @param executorType
+     * @return
+     */
+    public Executor newExecutor(ExecutorType executorType){
+        Executor executor = null;
+
+        return executor;
+    }
 }
