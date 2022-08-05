@@ -39,7 +39,7 @@ public class XmlConfigBuilder extends BaseBuilder{
      * @param parser xml信息内容
      */
     private void parseConfiguration(XPathParser parser) {
-        //这里会实现去除parser中的值，并塞入到configuration的操作。
+        //这里会实现去取parser中的值，并塞入到configuration的操作。
 
     }
 

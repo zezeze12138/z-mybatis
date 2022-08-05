@@ -1,4 +1,4 @@
-package com.mybatis;
+package com.mybatis.app;
 
 import com.mybatis.example.dao.UserDao;
 import com.mybatis.example.entity.User;
@@ -19,9 +19,10 @@ public class ZMybatisApplication {
 
     public static void main(String[] args) {
         //xml资源文件路径
-        String resourcePath = "mybatis-config.xml";
+        String resourcePath = "com/mybatis/app/mybatis-config.xml";
         //加载资源到输入流
-        InputStream inputStream = Resource.getResourceAsStream(resourcePath);
+        Resource resource = new Resource();
+        InputStream inputStream = resource.getResourceAsStream(resourcePath);
         //资源转换成配置类
         Configuration configuration = new XmlConfigBuilder(inputStream).parse();
         //通过配置类生成SqlSessionFactory
