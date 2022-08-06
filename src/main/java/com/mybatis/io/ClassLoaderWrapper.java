@@ -19,6 +19,10 @@ public class ClassLoaderWrapper {
             if(classLoader != null){
                 InputStream inputStream = classLoader.getResourceAsStream(resource);
 
+                if(inputStream == null){
+                    inputStream = classLoader.getResourceAsStream("/"+resource);
+                }
+
                 if(inputStream != null){
                     return inputStream;
                 }
@@ -30,7 +34,10 @@ public class ClassLoaderWrapper {
     ClassLoader[] getClassLoaders(ClassLoader classLoader){
         return new ClassLoader[]{
           //这里可以补充其他的类加载器
-          systemClassLoader
+                classLoader,
+                Thread.currentThread().getContextClassLoader(),
+                getClass().getClassLoader(),
+                systemClassLoader
         };
     }
 }

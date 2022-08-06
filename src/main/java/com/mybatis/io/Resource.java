@@ -14,7 +14,7 @@ public class Resource {
      * @param resource 资源文件路径s
      * @return
      */
-    public InputStream getResourceAsStream(String resource){
+    public static InputStream getResourceAsStream(String resource){
         return classLoaderWrapper.getResourceAsStream(resource);
     }
 
