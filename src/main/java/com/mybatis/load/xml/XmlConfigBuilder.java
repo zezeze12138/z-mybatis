@@ -1,7 +1,7 @@
 package com.mybatis.load.xml;
 
+import com.mybatis.load.document.XNode;
 import com.mybatis.session.Configuration;
-
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -14,7 +14,7 @@ public class XmlConfigBuilder extends BaseBuilder{
     private String environment;
 
     public XmlConfigBuilder(InputStream inputStream) {
-        this(new XPathParser(inputStream), null, null);
+        this(new XPathParser(inputStream, null), null, null);
     }
 
     public XmlConfigBuilder(XPathParser parser, String environment, Properties properties) {
@@ -40,7 +40,9 @@ public class XmlConfigBuilder extends BaseBuilder{
      */
     private void parseConfiguration(XPathParser parser) {
         //这里会实现去取parser中的值，并塞入到configuration的操作。
+        XNode root = parser.evalNode("/configuration");
 
     }
+
 
 }
