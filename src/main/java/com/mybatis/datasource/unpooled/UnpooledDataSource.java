@@ -135,7 +135,7 @@ public class UnpooledDataSource implements DataSource {
 
     @Override
     public <T> T unwrap(Class<T> iface) throws SQLException {
-        return null;
+        throw new SQLException("该类："+getClass().getName()+" 不是一个包装类");
     }
 
     @Override
@@ -145,26 +145,26 @@ public class UnpooledDataSource implements DataSource {
 
     @Override
     public PrintWriter getLogWriter() throws SQLException {
-        return null;
+        return DriverManager.getLogWriter();
     }
 
     @Override
     public void setLogWriter(PrintWriter out) throws SQLException {
-
+        DriverManager.setLogWriter(out);
     }
 
     @Override
     public void setLoginTimeout(int seconds) throws SQLException {
-
+        DriverManager.setLoginTimeout(seconds);
     }
 
     @Override
     public int getLoginTimeout() throws SQLException {
-        return 0;
+        return DriverManager.getLoginTimeout();
     }
 
     @Override
     public Logger getParentLogger() throws SQLFeatureNotSupportedException {
-        return null;
+        return Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     }
 }
