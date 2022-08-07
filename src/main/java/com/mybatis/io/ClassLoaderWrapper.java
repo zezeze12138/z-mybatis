@@ -14,6 +14,10 @@ public class ClassLoaderWrapper {
         return getResourceAsStream(resource, getClassLoaders(null));
     }
 
+    public Class<?> classForName(String name){
+        return classForName(name, getClassLoaders(null));
+    }
+
     InputStream getResourceAsStream(String resource, ClassLoader[] classLoaders){
         for(ClassLoader classLoader : classLoaders){
             if(classLoader != null){
@@ -29,6 +33,19 @@ public class ClassLoaderWrapper {
             }
         }
         return null;
+    }
+
+    Class<?> classForName(String name, ClassLoader[] classLoaders){
+        for(ClassLoader c1 : classLoaders){
+            if(c1 != null){
+                try{
+                    return Class.forName(name, true, c1);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        throw new RuntimeException("找不到类");
     }
 
     ClassLoader[] getClassLoaders(ClassLoader classLoader){

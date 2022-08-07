@@ -18,5 +18,13 @@ public class Resource {
         return classLoaderWrapper.getResourceAsStream(resource);
     }
 
+    /**
+     * 通过类名称获取类
+     * @param className 类名称
+     * @return 类
+     */
+    public static Class<?> classForName(String className){
+        return classLoaderWrapper.classForName(className);
+    }
 
 }
