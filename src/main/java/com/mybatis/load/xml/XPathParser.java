@@ -2,6 +2,7 @@ package com.mybatis.load.xml;
 
 import com.mybatis.load.document.XNode;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.*;
 
 import javax.xml.XMLConstants;
@@ -78,6 +79,11 @@ public class XPathParser {
         }
     }
 
+    /**
+     *  获取节点信息
+     * @param expression
+     * @return
+     */
     public XNode evalNode(String expression){
         XNode xNode = null;
         try {
@@ -87,4 +93,24 @@ public class XPathParser {
         }
         return xNode;
     }
+
+    /**
+     * 根据传入的节点作为根获取节点信息
+     * @param root
+     * @param expression
+     * @return
+     */
+    public XNode evalNode(Object root, String expression){
+        Node node = null;
+        try {
+            node = (Node) xpath.evaluate(expression, root, XPathConstants.NODE);
+            if(node == null){
+                return null;
+            }
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+        return new XNode(node,  variables, this);
+    }
+
 }

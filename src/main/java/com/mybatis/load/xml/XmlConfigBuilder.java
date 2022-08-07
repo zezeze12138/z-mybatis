@@ -1,8 +1,14 @@
 package com.mybatis.load.xml;
 
+import com.mybatis.datasource.DataSourceFactory;
 import com.mybatis.load.document.XNode;
+import com.mybatis.mapping.Environment;
 import com.mybatis.session.Configuration;
+import com.mybatis.transaction.TransactionFactory;
+
+import javax.sql.DataSource;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
 /**
@@ -41,8 +47,79 @@ public class XmlConfigBuilder extends BaseBuilder{
     private void parseConfiguration(XPathParser parser) {
         //这里会实现去取parser中的值，并塞入到configuration的操作。
         XNode root = parser.evalNode("/configuration");
-
+        //读取设置环境配置信息，设置jdbc连接配置信息
+        environmentsElement(root.evalNode("environments"));
     }
 
+    /**
+     * 解析并生成数据源环境
+     * @param environmentContext
+     */
+    private void environmentsElement(XNode environmentContext) {
+        if(environmentContext != null){
+            if(environment == null){
+                environment = environmentContext.getStringAttribute("default", null);
+            }
+            for(XNode child : environmentContext.getChildren()){
+                String id = child.getStringAttribute("id", null);
+                if(environment.equals(id)){
+                    try{
+                        //获取事务工厂
+                        TransactionFactory transactionFactory = transactionManagerElement(child.evalNode("transactionManager"));
+                        //获取数据源工厂
+                        DataSourceFactory dataSourceFactory = dataSourceElement(child.evalNode("dataSource"));
+                        //获取数据源
+                        DataSource dataSource = dataSourceFactory.getDataSource();
+                        //生成数据源环境信息
+                        Environment environment = new Environment(id, transactionFactory, dataSource);
+                        //设置数据源
+                        configuration.setEnvironment(environment);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        throw new RuntimeException("构建事务工厂异常");
+                    }
+
+                }
+            }
+        }
+    }
+
+    /**
+     * 获取数据源工厂
+     * @param context
+     * @return
+     */
+    private DataSourceFactory dataSourceElement(XNode context) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        if(context != null){
+            String type = context.getStringAttribute("type", null);
+            Properties properties = context.getChildrenAsProperties();
+            //通过类别名注册器中获取事务工厂
+            DataSourceFactory factory = (DataSourceFactory) configuration.getTypeAliasRegistry().resolveAlias(type).getDeclaredConstructor().newInstance();
+            factory.setProperties(properties);
+            return factory;
+        }
+        throw new RuntimeException("通过环境配置信息无法构建数据源工厂");
+    }
+
+    /**
+     * 获取事务工厂
+     * @param context
+     * @return
+     * @throws NoSuchMethodException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     * @throws InstantiationException
+     */
+    private TransactionFactory transactionManagerElement(XNode context) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        if(context != null){
+            String type = context.getStringAttribute("type", null);
+            Properties properties = context.getChildrenAsProperties();
+            //通过类别名注册器中获取事务工厂
+            TransactionFactory factory = (TransactionFactory) configuration.getTypeAliasRegistry().resolveAlias(type).getDeclaredConstructor().newInstance();
+            factory.setProperties(properties);
+            return factory;
+        }
+        throw new RuntimeException("通过环境配置信息无法构建事务工厂");
+    }
 
 }
