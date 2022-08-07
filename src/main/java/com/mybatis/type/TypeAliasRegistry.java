@@ -61,7 +61,7 @@ public class TypeAliasRegistry {
         }
         String key = alias.toLowerCase(Locale.ENGLISH);
         Class<T> value;
-        if(typeAliases.containsKey(alias)){
+        if(typeAliases.containsKey(key)){
             value = (Class<T>) typeAliases.get(key);
         }else{
             //找不到的话通过类的项目路径找一下

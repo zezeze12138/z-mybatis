@@ -1,6 +1,7 @@
 package com.mybatis.session;
 
 import com.mybatis.binding.MapperRegistry;
+import com.mybatis.datasource.pooled.PooledDataSourceFactory;
 import com.mybatis.executor.Executor;
 import com.mybatis.executor.SimpleExecutor;
 import com.mybatis.mapping.Environment;
@@ -38,7 +39,7 @@ public class Configuration {
      */
     public Configuration() {
         typeAliasRegistry.registerAlias("JDBC", JdbcTranscationFactory.class);
-
+        typeAliasRegistry.registerAlias("POOLED", PooledDataSourceFactory.class);
     }
 
     /**

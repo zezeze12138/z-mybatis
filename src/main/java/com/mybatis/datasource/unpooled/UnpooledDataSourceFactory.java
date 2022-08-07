@@ -1,19 +1,16 @@
-package com.mybatis.datasource.pooled;
+package com.mybatis.datasource.unpooled;
 
 import com.mybatis.datasource.DataSourceFactory;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
-/**
- * 数据连接池工厂
- */
-public class PooledDataSourceFactory implements DataSourceFactory {
+public class UnpooledDataSourceFactory implements DataSourceFactory{
 
     private DataSource dataSource;
 
-    public PooledDataSourceFactory() {
-        this.dataSource = new PooledDataSource();
+    public UnpooledDataSourceFactory() {
+        this.dataSource = new UnpooledDataSource();
     }
 
     @Override
@@ -25,6 +22,4 @@ public class PooledDataSourceFactory implements DataSourceFactory {
     public DataSource getDataSource() {
         return dataSource;
     }
-
-
 }
