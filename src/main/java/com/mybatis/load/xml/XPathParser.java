@@ -85,13 +85,13 @@ public class XPathParser {
      * @return
      */
     public XNode evalNode(String expression){
-        XNode xNode = null;
+        Node node = null;
         try {
-            xNode = (XNode) xpath.evaluate(expression, document, XPathConstants.NODE);
+            node = (Node) xpath.evaluate(expression, document, XPathConstants.NODE);
         } catch (XPathExpressionException e) {
             e.printStackTrace();
         }
-        return xNode;
+        return new XNode(node, variables, this);
     }
 
     /**
