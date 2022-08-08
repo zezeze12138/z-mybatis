@@ -5,6 +5,9 @@ import com.mybatis.datasource.pooled.PooledDataSourceFactory;
 import com.mybatis.datasource.unpooled.UnpooledDataSourceFactory;
 import com.mybatis.executor.Executor;
 import com.mybatis.executor.SimpleExecutor;
+import com.mybatis.executor.statement.RoutingStatementHandler;
+import com.mybatis.executor.statement.StatementHandler;
+import com.mybatis.mapping.BoundSql;
 import com.mybatis.mapping.Environment;
 import com.mybatis.mapping.MappedStatement;
 import com.mybatis.transaction.JdbcTranscationFactory;
@@ -26,6 +29,7 @@ public class Configuration {
     protected final Map<String, MappedStatement> mappedStatements = new HashMap<>();
     //类别名注册
     protected final TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
+    //
 
     public<T> T getMapper(Class<T> type, SqlSession sqlSession){
         return mapperRegistry.getMapper(type, sqlSession);
@@ -78,6 +82,22 @@ public class Configuration {
         return executor;
     }
 
+    /**
+     * 创建新的StatementHandler
+     * @param executor
+     * @param ms
+     * @param parameter
+     * @param rowBounds
+     * @param resultHandler
+     * @param boundSql
+     * @return
+     */
+    public StatementHandler newStatementHandler(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql){
+        StatementHandler statementHandler = new RoutingStatementHandler(executor, ms, parameter, rowBounds, resultHandler, boundSql);
+        // TODO: 2022/8/8 源码中还有一个拦截链，通过拦截链往创建的执行器中添加插件处理
+        // 这里暂时线不做实现拦截链的实现
+        return statementHandler;
+    }
 
     public Environment getEnvironment() {
         return environment;

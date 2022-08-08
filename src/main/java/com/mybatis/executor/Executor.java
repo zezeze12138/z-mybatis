@@ -2,6 +2,7 @@ package com.mybatis.executor;
 
 import com.mybatis.mapping.MappedStatement;
 import com.mybatis.session.ResultHandler;
+import com.mybatis.session.RowBounds;
 
 import java.util.List;
 
@@ -18,6 +19,6 @@ public interface Executor {
      * @param <E>
      * @return
      */
-    <E> List<E> query(MappedStatement ms, Object parameter, ResultHandler resultHandler);
+    <E> List<E> query(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler);
 
 }

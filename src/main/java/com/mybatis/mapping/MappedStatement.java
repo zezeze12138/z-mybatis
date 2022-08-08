@@ -11,6 +11,13 @@ public class MappedStatement {
     private String id;
     //sql的类型
     private SqlCommandType type;
+    //sql资源
+    private SqlSource sqlSource;
+    //配置信息
+    private Configuration configuration;
+    //Statement类型
+    private StatementType statementType;
+
 
     public String getId() {
         return id;
@@ -26,5 +33,39 @@ public class MappedStatement {
 
     public void setType(SqlCommandType type) {
         this.type = type;
+    }
+
+    public SqlSource getSqlSource() {
+        return sqlSource;
+    }
+
+    public void setSqlSource(SqlSource sqlSource) {
+        this.sqlSource = sqlSource;
+    }
+
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    public StatementType getStatementType() {
+        return statementType;
+    }
+
+    public void setStatementType(StatementType statementType) {
+        this.statementType = statementType;
+    }
+
+    /**
+     * 绑定sql
+     * @param parameterObject
+     * @return
+     */
+    public BoundSql getBoundSql(Object parameterObject){
+        BoundSql boundSql = sqlSource.getBoundSql(parameterObject);
+        return boundSql;
     }
 }
