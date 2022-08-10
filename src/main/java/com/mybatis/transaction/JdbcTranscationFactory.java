@@ -1,5 +1,6 @@
 package com.mybatis.transaction;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.util.Properties;
 
@@ -15,5 +16,10 @@ public class JdbcTranscationFactory implements TransactionFactory {
     @Override
     public Transaction newTransaction(Connection conn) {
         return new JdbcTranscation(conn);
+    }
+
+    @Override
+    public Transaction newTransaction(DataSource dataSource) {
+        return new JdbcTranscation(dataSource);
     }
 }

@@ -37,7 +37,7 @@ public class SimpleExecutor extends BaseExecutor {
         return null;
     }
 
-    private Statement prepareStatement(StatementHandler handler) {
+    private Statement prepareStatement(StatementHandler handler) throws SQLException {
         Statement statement;
         Connection connection = getConnection();
         statement = handler.prepare(connection, transaction.getTimeout());

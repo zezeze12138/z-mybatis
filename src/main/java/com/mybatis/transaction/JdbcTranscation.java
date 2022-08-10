@@ -1,5 +1,6 @@
 package com.mybatis.transaction;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -9,15 +10,19 @@ import java.sql.SQLException;
 public class JdbcTranscation implements Transaction {
 
     private Connection connection;
+    private DataSource dataSource;
 
+    public JdbcTranscation(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public JdbcTranscation(Connection connection) {
         this.connection = connection;
     }
 
     @Override
-    public Connection getConnection() {
-        return connection;
+    public Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
     }
 
     @Override

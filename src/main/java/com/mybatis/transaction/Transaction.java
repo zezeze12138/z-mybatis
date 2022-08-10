@@ -12,7 +12,7 @@ public interface Transaction {
      * 获取连接
      * @return
      */
-    Connection getConnection();
+    Connection getConnection() throws SQLException;
 
     /**
      * 提交

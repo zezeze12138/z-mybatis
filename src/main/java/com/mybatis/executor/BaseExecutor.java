@@ -65,7 +65,7 @@ public abstract class BaseExecutor implements Executor{
      * 获取连接
      * @return
      */
-    protected Connection getConnection(){
+    protected Connection getConnection() throws SQLException {
         Connection connection = transaction.getConnection();
         return connection;
     }
