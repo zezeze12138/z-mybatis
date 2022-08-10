@@ -18,11 +18,16 @@ public class XMLMapperEntityResolver implements EntityResolver {
     private static final String MYBATIS_CONDIG_SYSTEM = "mybatis-3-config.dtd";
     private static final String MYBATIS_CONFIG_DTD = "com/mybatis/load/xml/mybatis-3-config.dtd";
 
+    private static final String MYBATIS_MAPPER_SYSTEM = "mybatis-3-mapper.dtd";
+    private static final String MYBATIS_MAPPER_DTD = "com/mybatis/load/xml/mybatis-3-mapper.dtd";
+
     @Override
     public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
         String lowerCaseSystemId = systemId.toLowerCase(Locale.ENGLISH);
         if(lowerCaseSystemId.contains(MYBATIS_CONDIG_SYSTEM)){
             return getInputSource(MYBATIS_CONFIG_DTD, publicId, systemId);
+        }else if(lowerCaseSystemId.contains(MYBATIS_MAPPER_SYSTEM)){
+            return getInputSource(MYBATIS_MAPPER_DTD, publicId, systemId);
         }
 
         return null;
