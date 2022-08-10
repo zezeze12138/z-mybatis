@@ -9,6 +9,7 @@ import com.mybatis.session.RowBounds;
 import com.mybatis.transaction.Transaction;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -27,10 +28,13 @@ public class SimpleExecutor extends BaseExecutor {
             StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, resultHandler, boundSql);
             stmt = prepareStatement(handler);
             return handler.query(stmt, resultHandler);
-        }finally {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
             //关闭statement
             closeStatement(stmt);
         }
+        return null;
     }
 
     private Statement prepareStatement(StatementHandler handler) {

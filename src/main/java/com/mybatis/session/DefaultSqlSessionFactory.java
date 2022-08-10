@@ -30,6 +30,7 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
         final Environment environment = configuration.getEnvironment();
         final TransactionFactory transactionFactory = new JdbcTranscationFactory();
         try {
+            //在这里调用getConnection连接，通过jdbc连接数据库
             transaction = transactionFactory.newTransaction(environment.getDataSource().getConnection());
             final Executor executor = configuration.newExecutor(transaction, ExecutorType.SIMPLE);
             return new DefaultSqlSession(configuration, executor);

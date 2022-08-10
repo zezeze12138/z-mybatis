@@ -28,7 +28,7 @@ public class DefaultSqlSession implements SqlSession {
 
     public <E> List<E> selectList(String statement, Object parameter) {
         MappedStatement ms = configuration.getMappedStatement(statement);
-        return executor.query(ms, parameter, null);
+        return executor.query(ms, parameter, null, null);
     }
 
     /**

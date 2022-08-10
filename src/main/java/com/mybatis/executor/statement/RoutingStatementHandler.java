@@ -7,6 +7,7 @@ import com.mybatis.session.ResultHandler;
 import com.mybatis.session.RowBounds;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class RoutingStatementHandler implements StatementHandler {
     }
 
     @Override
-    public <E> List<E> query(Statement statement, ResultHandler resultHandler) {
+    public <E> List<E> query(Statement statement, ResultHandler resultHandler) throws SQLException {
         return delegate.query(statement, resultHandler);
     }
 
