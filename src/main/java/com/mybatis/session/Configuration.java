@@ -11,6 +11,9 @@ import com.mybatis.executor.resultset.DefaultResultSetHandler;
 import com.mybatis.executor.resultset.ResultSetHandler;
 import com.mybatis.executor.statement.RoutingStatementHandler;
 import com.mybatis.executor.statement.StatementHandler;
+import com.mybatis.load.xml.LanguageDriver;
+import com.mybatis.load.xml.LanguageDriverRegistry;
+import com.mybatis.load.xml.XmlLanguageDriver;
 import com.mybatis.mapping.BoundSql;
 import com.mybatis.mapping.Environment;
 import com.mybatis.mapping.MappedStatement;
@@ -37,6 +40,8 @@ public class Configuration {
     protected final TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
     //类型处理注册
     protected final TypeHandlerRegistry typeHandlerRegistry = new TypeHandlerRegistry();
+    //语言驱动注册
+    protected final LanguageDriverRegistry languageDriverRegistry = new LanguageDriverRegistry();
 
     public<T> T getMapper(Class<T> type, SqlSession sqlSession){
         return mapperRegistry.getMapper(type, sqlSession);
@@ -53,6 +58,8 @@ public class Configuration {
         typeAliasRegistry.registerAlias("JDBC", JdbcTranscationFactory.class);
         typeAliasRegistry.registerAlias("POOLED", PooledDataSourceFactory.class);
         typeAliasRegistry.registerAlias("UNPOOLED", UnpooledDataSourceFactory.class);
+
+        languageDriverRegistry.setDefaultDriverClass(XmlLanguageDriver.class);
     }
 
     /**
@@ -158,6 +165,19 @@ public class Configuration {
         // TODO: 2022/8/8 源码中还有一个拦截链，通过拦截链往创建的执行器中添加插件处理
         // 这里暂时线不做实现拦截链的实现
         return resultSetHandler;
+    }
+
+    /**
+     * 获取驱动实现
+     * @param languageDriverClass
+     * @return
+     */
+    public LanguageDriver getLanguageDriver(Class<? extends LanguageDriver> languageDriverClass){
+        if(languageDriverClass == null){
+            return languageDriverRegistry.getDefaultLanguageDriver();
+        }
+        languageDriverRegistry.register(languageDriverClass);
+        return languageDriverRegistry.getLanguageDriver(languageDriverClass);
     }
 
     public Environment getEnvironment() {

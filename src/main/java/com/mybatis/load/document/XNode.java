@@ -129,4 +129,8 @@ public class XNode {
     public String getName() {
         return name;
     }
+
+    public Node getNode() {
+        return node;
+    }
 }

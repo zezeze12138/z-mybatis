@@ -43,14 +43,15 @@ public class XmlMapperBuilder {
                 e.printStackTrace();
             }
         }
-        buildStatementFromContext(evalNode.evalNodes("select|insert|update|delete"));
+        buildStatementFromContext(namespace, evalNode.evalNodes("select|insert|update|delete"));
     }
 
     /**
      * 解析mapper中的sql配置，创建出mappedStatement
+     * @param namespace 命名空间，传进去和方法id拼接，作为key值放入configuration中的mappedStatements中。
      * @param list
      */
-    private void buildStatementFromContext(List<XNode> list) {
+    private void buildStatementFromContext(String namespace, List<XNode> list) {
         for(XNode context : list){
 
         }
