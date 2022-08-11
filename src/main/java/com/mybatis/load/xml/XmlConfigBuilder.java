@@ -1,6 +1,7 @@
 package com.mybatis.load.xml;
 
 import com.mybatis.datasource.DataSourceFactory;
+import com.mybatis.io.Resource;
 import com.mybatis.load.document.XNode;
 import com.mybatis.mapping.Environment;
 import com.mybatis.session.Configuration;
@@ -49,7 +50,10 @@ public class XmlConfigBuilder extends BaseBuilder{
         XNode root = parser.evalNode("/configuration");
         //读取设置环境配置信息，设置jdbc连接配置信息
         environmentsElement(root.evalNode("environments"));
+        //添加mapper
+        mapperElement(root.evalNode("mappers"));
     }
+
 
     /**
      * 解析并生成数据源环境
@@ -99,6 +103,33 @@ public class XmlConfigBuilder extends BaseBuilder{
             return factory;
         }
         throw new RuntimeException("通过环境配置信息无法构建数据源工厂");
+    }
+
+    /**
+     * 解析Mapper xml
+     * @param parent
+     */
+    private void mapperElement(XNode parent) {
+        if(parent != null){
+            for(XNode child : parent.getChildren()){
+                if("package".equals(child.getName())){
+                    //这里暂时不实现包下的mapper添加
+                }else{
+                    String resource = child.getStringAttribute("resource", null);
+                    String url = child.getStringAttribute("url", null);
+                    String mapperClass = child.getStringAttribute("class", null);
+                    if(resource != null && url == null && mapperClass == null){
+                        InputStream inputStream = Resource.getResourceAsStream(resource);
+                        if(inputStream == null){
+                            throw new RuntimeException("*mapper.xml文件加载失败");
+                        }
+                        XmlMapperBuilder xmlMapperBuilder = new XmlMapperBuilder(inputStream, resource, configuration);
+                        xmlMapperBuilder.parse();
+                    }
+
+                }
+            }
+        }
     }
 
     /**

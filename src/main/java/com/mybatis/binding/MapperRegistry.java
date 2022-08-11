@@ -37,4 +37,18 @@ public class MapperRegistry {
         //使用map存储mapper类与MapperProxyFactory的关系，这样可以在获取Mapper时找到对应的代理工厂，创建代理Mapper。
         knownMappers.put(type, new MapperProxyFactory<>(type));
     }
+
+    /**
+     * 添加包路径下的mapper
+     * @param packageName
+     */
+    public void addMapper(String packageName) {
+//        /*try {
+//            Class<?> clazz = Class.forName(packageName);
+//
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }*/
+
+    }
 }

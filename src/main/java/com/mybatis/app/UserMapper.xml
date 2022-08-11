@@ -3,6 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.app.UserDao">
     <select id="getUser" parameterType="int" resultType="java.util.HashMap">
-        select * from xxl_job_user
+        select * from post
     </select>
 </mapper>

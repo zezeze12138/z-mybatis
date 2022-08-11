@@ -56,6 +56,15 @@ public class Configuration {
     }
 
     /**
+     * 添加Mapper到Mapper注册器中
+     * @param packageName
+     * @param <T>
+     */
+    public <T> void addMappers(String packageName){
+        mapperRegistry.addMapper(packageName);
+    }
+
+    /**
      * 获取Mapper的信息内容
      * @param id
      * @return

@@ -121,4 +121,8 @@ public class XNode {
         }
         return attributes;
     }
+
+    public String getName() {
+        return name;
+    }
 }

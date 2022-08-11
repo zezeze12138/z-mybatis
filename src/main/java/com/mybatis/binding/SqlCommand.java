@@ -5,6 +5,8 @@ import com.mybatis.session.Configuration;
 
 import java.lang.reflect.Method;
 
+import static com.mybatis.binding.SqlCommandType.SELECT;
+
 public class SqlCommand {
 
     private final String name;
@@ -17,10 +19,10 @@ public class SqlCommand {
         MappedStatement mappedStatement = resolveMappedStatement(mapperInterface, methodName, declaringClass, configuration);
         if(mappedStatement != null){
             this.name = mappedStatement.getId();
-            this.type = mappedStatement.getType();
+            this.type = SELECT;
         }else {
             this.name = null;
-            this.type = SqlCommandType.UNKNOWN;
+            this.type = SELECT;
         }
     }
 
