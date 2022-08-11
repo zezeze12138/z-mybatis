@@ -5,6 +5,7 @@ import com.mybatis.load.document.XNode;
 import com.mybatis.session.Configuration;
 
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * Mapper xml解析
@@ -28,6 +29,7 @@ public class XmlMapperBuilder {
         configurationElement(parser.evalNode("/mapper"));
     }
 
+
     /**
      * 解析配置实现
      * @param evalNode
@@ -41,6 +43,18 @@ public class XmlMapperBuilder {
                 e.printStackTrace();
             }
         }
+        buildStatementFromContext(evalNode.evalNodes("select|insert|update|delete"));
     }
+
+    /**
+     * 解析mapper中的sql配置，创建出mappedStatement
+     * @param list
+     */
+    private void buildStatementFromContext(List<XNode> list) {
+        for(XNode context : list){
+
+        }
+    }
+
 
 }

@@ -3,6 +3,7 @@ package com.mybatis.load.xml;
 import com.mybatis.load.document.XNode;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.*;
 
 import javax.xml.XMLConstants;
@@ -13,6 +14,8 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -111,6 +114,28 @@ public class XPathParser {
             e.printStackTrace();
         }
         return new XNode(node,  variables, this);
+    }
+
+    /**
+     * 获取节点列表
+     * @param expression
+     * @return
+     */
+    public List<XNode> evalNodes(String expression){
+        return evalNodes(document, expression);
+    }
+
+    public List<XNode> evalNodes(Object root, String expression){
+        List<XNode> xNodes = new ArrayList<>();
+        try {
+            NodeList nodeList = (NodeList) xpath.evaluate(expression, root, XPathConstants.NODESET);
+            for(int i = 0; i < nodeList.getLength(); i++){
+                xNodes.add(new XNode(nodeList.item(i), variables, this));
+            }
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+        return xNodes;
     }
 
 }

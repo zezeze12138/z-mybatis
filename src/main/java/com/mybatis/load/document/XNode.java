@@ -38,6 +38,10 @@ public class XNode {
         return xPathParser.evalNode(node, expression);
     }
 
+    public List<XNode> evalNodes(String expression){
+        return xPathParser.evalNodes(expression);
+    }
+
     /**
      * 获取属性信息，获取不到就用默认值
      * @param name 属性key名称

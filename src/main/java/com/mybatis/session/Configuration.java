@@ -74,6 +74,14 @@ public class Configuration {
     }
 
     /**
+     * 添加Mapper中的信息
+     * @param ms
+     */
+    public void addMappedStatement(MappedStatement ms){
+        mappedStatements.put(ms.getId(), ms);
+    }
+
+    /**
      * 获取类别名注册器
      * @return
      */

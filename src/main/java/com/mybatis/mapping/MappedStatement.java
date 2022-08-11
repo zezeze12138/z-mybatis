@@ -18,6 +18,13 @@ public class MappedStatement {
     //Statement类型
     private StatementType statementType;
 
+    public MappedStatement(String id, SqlCommandType type, SqlSource sqlSource, Configuration configuration) {
+        this.id = id;
+        this.type = type;
+        this.sqlSource = sqlSource;
+        this.configuration = configuration;
+        this.statementType = StatementType.STATEMENT;
+    }
 
     public String getId() {
         return id;
