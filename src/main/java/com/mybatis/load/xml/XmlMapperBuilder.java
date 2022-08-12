@@ -5,6 +5,7 @@ import com.mybatis.load.document.XNode;
 import com.mybatis.session.Configuration;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,7 +44,10 @@ public class XmlMapperBuilder {
                 e.printStackTrace();
             }
         }
-        buildStatementFromContext(namespace, evalNode.evalNodes("select|insert|update|delete"));
+        List<XNode> list = new ArrayList<>();
+        list.add(evalNode.evalNode("select"));
+        //buildStatementFromContext(namespace, evalNode.evalNodes("select|insert|update|delete"));
+        buildStatementFromContext(namespace, list);
     }
 
     /**
@@ -53,7 +57,8 @@ public class XmlMapperBuilder {
      */
     private void buildStatementFromContext(String namespace, List<XNode> list) {
         for(XNode context : list){
-
+            final XmlStatementBuilder statementBuilder = new XmlStatementBuilder(configuration, context, namespace);
+            statementBuilder.parse();
         }
     }
 

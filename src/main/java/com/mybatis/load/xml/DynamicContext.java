@@ -10,4 +10,8 @@ public class DynamicContext {
 
     public DynamicContext(Configuration configuration, Object parameterObject) {
     }
+
+    public void appendSql(String sql){
+        sqlBuilder.add(sql);
+    }
 }

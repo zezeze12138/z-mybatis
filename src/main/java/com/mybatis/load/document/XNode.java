@@ -29,6 +29,11 @@ public class XNode {
         this.body = parseBody(node);
     }
 
+
+    public XNode newXnode(Node node){
+        return new XNode(node, variables, xPathParser);
+    }
+
     /**
      * 获取节点信息
      * @param expression 节点位置
@@ -132,5 +137,9 @@ public class XNode {
 
     public Node getNode() {
         return node;
+    }
+
+    public String getBody() {
+        return body;
     }
 }

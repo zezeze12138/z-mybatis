@@ -1,6 +1,7 @@
 package com.mybatis.mapping;
 
 import com.mybatis.load.document.SqlNode;
+import com.mybatis.load.xml.DynamicContext;
 import com.mybatis.session.Configuration;
 
 public class DynamicSqlSource implements SqlSource {
@@ -15,6 +16,9 @@ public class DynamicSqlSource implements SqlSource {
 
     @Override
     public BoundSql getBoundSql(Object parameterObject) {
+        DynamicContext context = new DynamicContext(configuration, parameterObject);
+        sqlNode.apply(context);
+
         return null;
     }
 }
