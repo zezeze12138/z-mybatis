@@ -23,7 +23,7 @@ public class XmlScriptBuilder {
      * 解析方法
      */
     public SqlSource parse(){
-        //SqlSource sqlSource = new DynmicSqlSource(configuration, )
+
         return null;
     }
 }
