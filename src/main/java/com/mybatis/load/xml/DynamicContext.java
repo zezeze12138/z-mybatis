@@ -14,4 +14,8 @@ public class DynamicContext {
     public void appendSql(String sql){
         sqlBuilder.add(sql);
     }
+
+    public String getSql(){
+        return sqlBuilder.toString().trim();
+    }
 }

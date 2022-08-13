@@ -72,7 +72,7 @@ public class UnpooledDataSource implements DataSource {
         Connection connection = DriverManager.getConnection(url, properties);
         //配置数据库连接
         configureConnection(connection);
-        return null;
+        return connection;
     }
 
 

@@ -44,4 +44,8 @@ public class TypeHandlerRegistry {
         jdbcTypeTypeHandlerMap.put(jdbcType, typeHandler);
         typeHandlerMap.put(javaType, jdbcTypeTypeHandlerMap);
     }
+
+    public TypeHandler getTypeHander(Class type){
+        return typeHandlerMap.get(type).get(null);
+    }
 }

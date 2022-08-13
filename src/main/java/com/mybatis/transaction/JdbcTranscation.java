@@ -14,6 +14,11 @@ public class JdbcTranscation implements Transaction {
 
     public JdbcTranscation(DataSource dataSource) {
         this.dataSource = dataSource;
+        try {
+            this.connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public JdbcTranscation(Connection connection) {
@@ -22,7 +27,7 @@ public class JdbcTranscation implements Transaction {
 
     @Override
     public Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
+        return connection;
     }
 
     @Override

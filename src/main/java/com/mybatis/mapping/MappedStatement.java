@@ -3,6 +3,9 @@ package com.mybatis.mapping;
 import com.mybatis.binding.SqlCommandType;
 import com.mybatis.session.Configuration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  */
@@ -17,6 +20,8 @@ public class MappedStatement {
     private Configuration configuration;
     //Statement类型
     private StatementType statementType;
+    //数据结果
+    private List<ResultMap> resultMaps;
 
     public MappedStatement(String id, SqlCommandType type, SqlSource sqlSource, Configuration configuration) {
         this.id = id;
@@ -24,6 +29,7 @@ public class MappedStatement {
         this.sqlSource = sqlSource;
         this.configuration = configuration;
         this.statementType = StatementType.STATEMENT;
+        this.resultMaps = new ArrayList<>();
     }
 
     public String getId() {
@@ -64,6 +70,14 @@ public class MappedStatement {
 
     public void setStatementType(StatementType statementType) {
         this.statementType = statementType;
+    }
+
+    public List<ResultMap> getResultMaps() {
+        return resultMaps;
+    }
+
+    public void setResultMaps(List<ResultMap> resultMaps) {
+        this.resultMaps = resultMaps;
     }
 
     /**
